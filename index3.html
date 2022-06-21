@@ -6,17 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        table {
-            border-collapse: collapse;
-        }
-
-        td {
-            text-align: center;
-            border: 1px solid grey;
-            width: 10%;
-        }
-    </style>
 </head>
 
 <body>
@@ -77,7 +66,52 @@
         }
 
         const table1 = new EmpTable(empArr, 'Имя', "Возраст", "Должность", ...Object.keys(empArr[0]));
-        table1.getHtml();
+        // table1.getHtml();
+
+
+        class StyledEmpTable extends EmpTable {
+            constructor(arr, th1, th2, th3, td1, td2, td3) {
+                super(arr, th1, th2, th3, td1, td2, td3);
+            }
+
+            getStyles() {
+                return ` <style>
+               table {
+                border-collapse:collapse;
+            }
+           td {
+            text-align: center;
+            border: 1px solid grey;
+            width: 10%;
+        }
+        </style>`;
+            }
+
+            getHtml() {
+                const styles = document.createElement('style');
+                styles.innerHTML = this.getStyles();
+                document.querySelector('head').append(styles);
+
+                let container = document.createElement('div');
+
+                document.querySelector('body').append(container);
+                let table = document.createElement('table');
+                container.append(table);
+
+                let headRow = document.createElement('tr');
+                table.append(headRow);
+                headRow.innerHTML = `<th>${this.th1}</th><th>${this.th2}</th><th>${this.th3}</th>`;
+
+                this.arr.forEach(el => {
+                    let row = document.createElement('tr');
+                    row.innerHTML = `<td>${el[this.td1]}</td><td>${el[this.td2]}</td><td>${el[this.td3]}</td>`;
+                    table.append(row);
+                });
+            }
+        }
+
+        const table2 = new StyledEmpTable(empArr, 'Имя', "Возраст", "Должность", ...Object.keys(empArr[0]));
+        table2.getHtml();
 
     </script>
 </body>
