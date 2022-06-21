@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        month = ['JANUARY', 'FABRUARY', 'MARCH', 'APRIL', 'MAY', 'JUN', 'JULY', 'AUGUST', 'SEPTEMBER', 'NOVEMBER', 'DECEMBER'];
+
+        // console.log(Date.now());
+
+        class ExtendedDate extends Date {
+
+            printDate() {
+                document.write(`Day: ${this.getDate()} Month: ${month[this.getMonth()]}<br>`);
+            }
+
+            isFuture() {
+                if ((Date.now() - this.getDate()) > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            isLeap() {
+                if (this.getFullYear % 4 === 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            getNextDay() {
+                this.setDate(this.getDate() + 1);
+                return this;
+            }
+        }
+
+        const myDate = new ExtendedDate('2088 May 12');
+        myDate.printDate();
+        document.write(`Будущее или нет?: ${myDate.isFuture()} <br>`);
+        document.write(`Високосный?: ${myDate.isLeap()}<br>`);
+        document.write(`Следующая дата: ${myDate.getNextDay()}<br>`);
+
+    </script>
+</body>
+
+</html>
